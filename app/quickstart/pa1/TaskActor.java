@@ -9,25 +9,31 @@ import aa.core.CreateActorException;
 
 public class TaskActor extends Actor {
 
-	int p, c, time, release_time, deadline = 0;
-	int j = 1; // Message counter
+	int p, c, time, deadline = 0;
+	int release_time, j = 1; // Message counter
 	ActorName server_actor;
 	
 	public TaskActor(Integer p, Integer c, Integer time, ActorName server_actor) {
 		this.p = p;
 		this.c = c;
 		this.time = time;
+		this.server_actor = server_actor;
 		send(getActorName(), "start");
 	}
 	
 	public void start() {
 		int i=0;
 		while(i<5) {
-			release_time = release_time + j * p;
-			deadline = p;
-			send(server_actor, "lcm", release_time, c, deadline);
+			release_time 	= p + j * p;
+			deadline 		= get_random(p) + release_time;
+
+			send(server_actor, "compute_lcm", get_random(500), get_random(500), release_time, c, deadline);
 			i++;
 			j++;
 		}
+	}
+	
+	public int get_random(int max) {
+		return ((int)(Math.random() * max));
 	}
 }

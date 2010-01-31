@@ -32,8 +32,8 @@ public class TaskCreator extends Actor {
 		
 		/* Create task-actor */
 	    try {
-			Integer p = ((int)(Math.random() * 5));
-			Integer c = ((int)(Math.random() * p));
+			Integer p = ((int)(Math.random() * 10)) + 1;
+			Integer c = ((int)(Math.random() * p-1)) + 1;
 			actor_name = create("app.quickstart.pa1.TaskActor", p, c, time, server_actor);
 			TAs.add(actor_name);
 		} catch (CreateActorException e) {
