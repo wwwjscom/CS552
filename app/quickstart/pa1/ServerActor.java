@@ -9,7 +9,7 @@ import aa.core.CreateActorException;
 
 public class ServerActor extends Actor {
 
-	int time;
+	int time, dropped, processed = 0;
 	
 	public ServerActor() {
 		//send(getActorName(), "start");
@@ -21,11 +21,6 @@ public class ServerActor extends Actor {
 	 */
 	public void compute_lcm(Integer a, Integer b, Integer release_time, Integer c, Integer deadline) {
 
-		//println("Checking: " + time + " + " + deadline + ">= " + c + "+ " + release_time);
-		//println("Time: " + time + "\t Deadline: " + deadline + "\t Release Time: " + release_time);
-		println("Checking: " + deadline + ">= " + time + "+ " + c);
-
-//		if((time + deadline ) >= (c + release_time)) {
 		if(deadline >= time + c) {
 			// Increment the clock by the computation time
 			time = time + c;
@@ -34,12 +29,12 @@ public class ServerActor extends Actor {
 			String sa = ""+a;
 			String sb = ""+b;
 			lcm(sa, sb);
+			processed += 1;
 		} else {
 			// Drop the message
-			println("Dropping message");
+			dropped += 1;
 		}
-		
-
+		println("Dropped: " + dropped + "\tProcessed: " + processed);
 	}
 	
 	/*
@@ -52,6 +47,5 @@ public class ServerActor extends Actor {
 		BigInteger numerator = big_a;
 		BigInteger denominator = big_a.gcd(big_b);
 		BigInteger lcm = (numerator.divide(denominator)).multiply(big_b);
-		//println("LCM: " + lcm);
 	}
 }

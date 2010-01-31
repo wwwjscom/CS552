@@ -10,7 +10,7 @@ import aa.core.CreateActorException;
 public class TaskActor extends Actor {
 
 	int p, c, time, deadline = 0;
-	int release_time, j = 1; // Message counter
+	int release_time, j = 1; // j: Message counter
 	ActorName server_actor;
 	
 	public TaskActor(Integer p, Integer c, Integer time, ActorName server_actor) {
@@ -25,8 +25,8 @@ public class TaskActor extends Actor {
 		int i=0;
 		while(i<5) {
 			release_time 	= p + j * p;
-			deadline 		= get_random(p) + release_time;
-
+			//deadline 		= get_random(p) + release_time; // To randomize the deadline, call this.
+			deadline		= p + release_time;
 			send(server_actor, "compute_lcm", get_random(500), get_random(500), release_time, c, deadline);
 			i++;
 			j++;
