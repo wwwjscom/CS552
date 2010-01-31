@@ -19,6 +19,7 @@ all:
 	javac app/quickstart/hello5/*.java
 	javac app/quickstart/hello6/*.java
 	javac app/quickstart/sum/*.java
+	javac app/pa1/*.java
 
 
 clean:
