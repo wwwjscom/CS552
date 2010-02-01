@@ -44,4 +44,15 @@ public class TaskCreator extends Actor {
 
 	}
 	
+	/* Returns the array list of task actors */
+	public void print_actors() throws CommunicationException {
+		
+		Integer hits = 0, misses = 0;
+		
+		for(int i=0; i<TAs.size();i++) {
+			hits += (Integer) call(TAs.get(i), "hits");
+			misses += (Integer) call(TAs.get(i), "misses");
+		}
+	}
+	
 }

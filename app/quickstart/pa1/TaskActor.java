@@ -9,6 +9,7 @@ import aa.core.CreateActorException;
 
 public class TaskActor extends Actor {
 
+	Integer hits = 0, misses = 0;
 	int p, c, time, deadline = 0;
 	int release_time, j = 1; // j: Message counter
 	ActorName server_actor;
@@ -35,5 +36,9 @@ public class TaskActor extends Actor {
 	
 	public int get_random(int max) {
 		return ((int)(Math.random() * max));
+	}
+	
+	public Integer hits() {
+		return hits;
 	}
 }
