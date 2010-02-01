@@ -16,12 +16,5 @@ public class Main extends Actor {
 		} catch (CreateActorException e) {
     	    System.out.println("> Main.main: " + e); 
 		}
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		send(task_creator, "print_actors");
 	}
 }

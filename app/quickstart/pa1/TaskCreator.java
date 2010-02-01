@@ -9,10 +9,15 @@ import aa.core.CreateActorException;
 
 public class TaskCreator extends Actor {
 
+	// -1 for random p/c values.  Or set 2, 4 for
+	// such a server-actors utilization
+	int SIMULATE = -1;
+	
 	int NUM_OF_TA = 10; // Number of task actors to create
 	ArrayList<ActorName> TAs = new ArrayList<ActorName>();	// Array to track our TAs
 	int time = 0; // Logical time
 	ActorName server_actor;
+	Integer p = 0, c = 0;
 
 	public TaskCreator(ActorName server_actor) {
 		this.server_actor = server_actor;
@@ -29,11 +34,9 @@ public class TaskCreator extends Actor {
 	
 	public void createTaskActor() {
 		ActorName actor_name = null;
-		
+		setPC();
 		/* Create task-actor */
-	    try {
-			Integer p = ((int)(Math.random() * 10)) + 1;
-			Integer c = ((int)(Math.random() * p-1)) + 1;
+	    try {	    	
 			actor_name = create("app.quickstart.pa1.TaskActor", p, c, time, server_actor);
 			TAs.add(actor_name);
 		} catch (CreateActorException e) {
@@ -42,6 +45,39 @@ public class TaskCreator extends Actor {
 		
 		/* Setup the p and c values, and time */
 
+	}
+	
+	public void setPC() {
+    	switch(SIMULATE) {
+    	case -1:
+    		p = ((int)(Math.random() * 10)) + 1;
+    		c = ((int)(Math.random() * p-1)) + 1;
+    		break;
+    	case 2:
+    		c = 2;
+    		p = 10;
+    		break;
+    	case 4:
+    		c = 4;
+    		p = 10;
+    		break;
+    	case 6:
+    		c = 6;
+    		p = 10;
+    		break;
+    	case 8:
+    		c = 8;
+    		p = 10;
+    		break;
+    	case 10:
+    		c = 10;
+    		p = 10;
+    		break;
+    	case 15:
+    		c = 15;
+    		p = 10;
+    		break;
+    	}
 	}
 	
 	/* Returns the array list of task actors */
