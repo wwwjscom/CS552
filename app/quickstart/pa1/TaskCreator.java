@@ -9,9 +9,10 @@ import aa.core.CreateActorException;
 
 public class TaskCreator extends Actor {
 
-	// -1 for random p/c values.  Or set 2, 4 for
-	// such a server-actors utilization
-	int SIMULATE = -1;
+	// -1 for random p/c values.  Or set 2, 4, etc for
+	// such a server-actors utilization (where the number XY represents X.Y utilization)
+	// If Y is not set, then the form becomes 0.X
+	int SIMULATE = 15;
 	
 	int NUM_OF_TA = 10; // Number of task actors to create
 	ArrayList<ActorName> TAs = new ArrayList<ActorName>();	// Array to track our TAs
