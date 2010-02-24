@@ -12,7 +12,13 @@ public class Main extends Actor {
 	public Main() {
 		try {
 			server_actor = create("app.quickstart.pa1.ServerActor");
-			task_creator = create("app.quickstart.pa1.TaskCreator", server_actor);
+			
+			// Use this line for EDF (PA1, #1)
+			server_actor = create("app.quickstart.pa1.ServerActor");
+			send(server_actor, "initEDF");
+			
+			// Use this line for PA1
+			//task_creator = create("app.quickstart.pa1.TaskCreator", server_actor);
 		} catch (CreateActorException e) {
     	    System.out.println("> Main.main: " + e); 
 		}

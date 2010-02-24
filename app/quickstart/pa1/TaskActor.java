@@ -34,6 +34,10 @@ public class TaskActor extends Actor {
 		}
 	}
 	
+	public void start_edf() {
+		
+	}
+	
 	public int get_random(int max) {
 		return ((int)(Math.random() * max));
 	}
