@@ -58,7 +58,12 @@ public class ServerActor extends Actor {
 	 */
 	public void edf(ArrayList<Task> tasks) {		
 		while(!tasks.isEmpty()) {
-			Task curr_task = next_task_edf(tasks, time);
+			Task curr_task = null;
+
+			if(TYPE == "RMS")
+				 curr_task = next_task_rms(tasks, time);
+			else if(TYPE == "EDF")
+				 curr_task = next_task_rms(tasks, time);
 
 			if(curr_task == null && !tasks.isEmpty()) {
 				// No tasks have been released that are ready to run,
@@ -74,13 +79,19 @@ public class ServerActor extends Actor {
 			while(curr_task.d < time) {
 				dropped++;
 				tasks.remove(curr_task);
-				curr_task = next_task_edf(tasks, time);
+				if(TYPE == "RMS")
+					curr_task = next_task_rms(tasks, time);
+				else if(TYPE == "EDF")
+					curr_task = next_task_rms(tasks, time);
 			}
 			
 			/* Process one time unit of work on the task */
-			curr_task.c(curr_task.c() -1);
+			if(useIP)
+				curr_task.c(curr_task.c() -2);
+			else
+				curr_task.c(curr_task.c() -1);
 			
-			if(curr_task.c() == 0) {
+			if(curr_task.c() <= 0) {
 				processed++;
 				tasks.remove(curr_task);
 			}
@@ -112,6 +123,24 @@ public class ServerActor extends Actor {
 	}
 	
 	
+	/* 
+	 * Return the next task, based on period (RMS).
+	 */
+	public Task next_task_rms(ArrayList<Task> tasks, int curr_time) {
+		Task next = null;
+		int min = 999999;
+		for(int i=0; i<tasks.size();i++) {
+			Task curr = tasks.get(i);
+			if(time >= curr.r() && curr.t() < min) {
+				min = curr.t();
+				//System.out.println("New min: " + min);
+				next = curr;
+			}
+		}
+		return next;
+	}
+	
+	
 	ActorName server_actor;
 	Integer p = 0, c = 0; // period and computation time
 	
@@ -135,6 +164,8 @@ public class ServerActor extends Actor {
 	// such a server-actors utilization (where the number XY represents X.Y utilization)
 	// If Y is not set, then the form becomes 0.X
 	int SIMULATE = 5;
+	String TYPE = "RMS"; // Either RMS of EDF (hw2, question 1 & 2)
+	boolean useIP = true; // Use Imprecise Computation (hw2, question 2)
 	
 	/*
 	 * Returns 3 tasks in an ArrayList
